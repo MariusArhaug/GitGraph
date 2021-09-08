@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -18,9 +14,15 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "baseUrl": "src", // This must be specified if "paths" is.
+    "paths": {
+      "@components/*": ["components/*"]
+      // "@config/*": ["app/_config/*"],
+      // "@environment/*": ["environments/*"],
+      // "@shared/*": ["app/_shared/*"],
+      // "@helpers/*": ["helpers/*"]
+    }
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }

@@ -1,0 +1,10 @@
+footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 20vh;
+}
+
+footer div {
+  padding: 1rem;
+}
