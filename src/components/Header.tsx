@@ -2,8 +2,8 @@ import React from "react";
 
 export function Header() {
   return (
-    <header className="App-header">
-      "Platform Name"
+    <header>
+      <h1 className="text-center text-5xl py-16">"Placeholder title"</h1>
     </header>
   )
 }
