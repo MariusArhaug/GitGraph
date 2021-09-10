@@ -5,7 +5,9 @@ import './styles/global.css'
 import { Content } from './content/fromAPI'
 
 export default function Main() {
-  return <div className="Main">
-    <Content />
+  return (
+    <div className="Main">
+      <Content />
     </div>
+  )
 }
