@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import React from 'react';
-import './Main.css'
+import './main.css'
 export default function Main() {
   return (
     <div className="Main">

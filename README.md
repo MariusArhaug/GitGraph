@@ -43,9 +43,21 @@ Commit messages need to follow one of these four tags before additional message 
 
 Same goes with branch names `FEAT/<issue number>`
 
+### Dependencies:
+
+- TypeScript
+- React
+- Tailwind CSS
+- Jest
+- Eslint
+- Prettier
+- Craco
+- Font awesome
+
 ### VSCode extensions
 
 - Prettier
 - ESLint
 - Bracket Pair Colorizer
+- Tailwind CSS Intelisense
 - Vim (for legends)
