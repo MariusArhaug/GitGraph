@@ -14,12 +14,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  background-color: #282c34;
+  background: radial-gradient(at top left, rgb(46, 46, 46), #000 100%);
   background-repeat: no-repeat;
   color: white;
 }
 
-p{
-  @apply my-6
+p {
+  @apply my-6;
 }
-
