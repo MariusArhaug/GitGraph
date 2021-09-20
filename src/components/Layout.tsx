@@ -2,6 +2,7 @@ import React from 'react'
 import { Navbar } from './Navbar'
 import { Footer } from './Footer'
 import { Header } from './Header'
+import { InfoBox } from './Infobox'
 
 import '../styles/global.css'
 
@@ -9,9 +10,10 @@ import '../styles/global.css'
 export function Layout({ children }: { children: any }) {
   return (
     <div>
-      <Navbar />
+      <Navbar/>
       <div className="flex flex-col min-h-screen max-w-screen-xl my-0 mx-auto ">
         <Header />
+        <InfoBox />
 
         <div className="flex-grow">{children}</div>
 
