@@ -1,5 +1,5 @@
 import React from 'react'
-import image from '../img/imagetrans.jpg'
+import image from '../img/imagetrans.png'
 
 export function Navbar() {
   return (
