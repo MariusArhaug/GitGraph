@@ -2,6 +2,7 @@ import React from 'react'
 import { Navbar } from './Navbar'
 import { Footer } from './Footer'
 import { Header } from './Header'
+import { ChartTest } from './ChartTest'
 
 import '../styles/global.css'
 
@@ -11,7 +12,9 @@ export function Layout({ children }: { children: any }) {
     <div className="flex flex-col min-h-screen max-w-screen-xl my-0 mx-auto ">
       <Navbar />
       <Header />
-
+      <div className="flex content-center justify-center">
+      <ChartTest />
+      </div>
       <div className="flex-grow">{children}</div>
 
       <Footer />
