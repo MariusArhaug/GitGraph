@@ -11,3 +11,7 @@ Pipeline first builds project, which should fail if invalid ts is pushed.
 The testing stage of the pipeline ensures all tests are passed and prints a coverage report in the console.
 Upon pushing to master the coverage-badge in the GitLab repo is updated.
 The eslint job checks that eslint doesn't throw any errors for the project.
+
+
+### Snapshot testing
+When changing an implementation, run `yarn test --updateSnapshot` to update snapshots. Otherwise snapshot-tests will fail when implementation is changed.
