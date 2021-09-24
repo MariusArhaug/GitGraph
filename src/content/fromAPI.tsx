@@ -6,7 +6,7 @@ export default function Content() {
   const defaultIssue: IIssue[] = []
 
   const [data, setData] = useState(defaultIssue)
-  const [error, setError]: [string, (error: string) => void] = useState('')
+  const [error, setError] = useState<string>('')
 
   useEffect(() => {
     getIssues()
