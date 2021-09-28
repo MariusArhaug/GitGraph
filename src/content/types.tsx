@@ -13,6 +13,9 @@ export interface IUser {
   id: number;
   name: string;
   username: string;
+  state: string;
+  avatar_url: string;
+  web_url: string;
 }
 
 export interface ICommit {
@@ -27,4 +30,3 @@ export interface IMilestone {
   title: string;
   state: string;
 }
-
