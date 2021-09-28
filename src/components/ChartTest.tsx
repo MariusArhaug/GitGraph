@@ -1,7 +1,34 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import axios from '../http-common'
+import { IICommit } from "content/types";
 
-const data = [
+/*
+export default function Content() {
+  const defaultCommits: IICommit[] = []
+
+
+  const [data, setData] = useState(defaultCommits)
+  const [error, setError]: [string, (error: string) => void] = useState('')
+
+  useEffect(() => {
+    getCommits()
+  })
+
+  const getCommits = () => {
+    axios
+      .get<IICommit>(`repository/commits`)
+      .then((response) => {
+        console.log(response.data)
+        setData(response.data)
+      })
+      .catch((error: Error) => {
+        setError(error.message)
+    })
+}
+
+/*
+const dummy = [
     {
       name: '19/09/21',
       Ole_Alexander_Høyby: 1,
@@ -53,8 +80,17 @@ const data = [
     },
   ];
 
+*/
+/*
+
 export function ChartTest(){
     return (
+      <div>
+        {data.map((commits) =>)
+          <li key={commits.id}>
+
+          <p className="mt-1 mb-8">{issue.description}</p>
+        </li>))}
         <LineChart
             width={500}
             height={300}
@@ -65,23 +101,27 @@ export function ChartTest(){
                 left: 20,
                 bottom: 5
             }}
-    >
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="name" />
-      <YAxis allowDecimals={false}/>
-      <Tooltip />
-      <Legend />
-      <Line
-        type="monotone"
-        dataKey="Ole_Alexander_Høyby"
-        stroke="#8884d8"
-        activeDot={{ r: 8 }}
-      />
-      <Line type="monotone" dataKey="Marius_Arhaug" stroke="#82ca9d" />
-      <Line type="monotone" dataKey="patrick_helvik_legendre" stroke="#ff94c9"/>
-      <Line type="monotone" dataKey="Stefan_Djordje_Tomic" stroke="#ffe552"/>
-    </LineChart>
+        >
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" />
+        <YAxis allowDecimals={false}/>
+        <Tooltip />
+        <Legend />
+        <Line
+          type="monotone"
+          dataKey="Ole_Alexander_Høyby"
+          stroke="#8884d8"
+          activeDot={{ r: 8 }}
+        />
+        <Line type="monotone" dataKey="Marius_Arhaug" stroke="#82ca9d" />
+        <Line type="monotone" dataKey="patrick_helvik_legendre" stroke="#ff94c9"/>
+        <Line type="monotone" dataKey="Stefan_Djordje_Tomic" stroke="#ffe552"/>
+      </LineChart>
+      {error && <p className="error">{error}</p>}
+    </div>
+
     )
+}
 }
 
 /*  
