@@ -21,7 +21,7 @@ export default function FetchData() {
   /* eslint-disable @typescript-eslint/no-unused-vars */
   const getMembers = () => {
     axios
-      .get<IMember[]>('members')
+      .get<IMember[]>('repository/contri')
       .then((response) => {
         setMembers(response.data)
       })

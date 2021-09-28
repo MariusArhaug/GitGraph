@@ -4,14 +4,14 @@ import axios from '../http-common'
 import { ICommit } from "../content/types";
 
 
-export default function Charts() {
+export function Charts() {
   const ICommit: ICommit[] = []
 
   const [commits, setCommits] = useState(ICommit)
   const [error, setError]: [string, (error: string) => void] = useState('')
 
   useEffect(() => {
-    getCommits()
+    console.error(getCommits())
   })
 
   const getCommits = () => {
@@ -82,18 +82,13 @@ const dummy = [
 */
 
 
-export function ChartTest(){
+
     return (
       <div>
-        {data.map((commits) =>)
-          <li key={commits.id}>
-
-          <p className="mt-1 mb-8">{issue.description}</p>
-        </li>))}
         <LineChart
             width={500}
             height={300}
-            data={data}
+            data={commits}
             margin={{
                 top: 5,
                 right: 30,
@@ -102,7 +97,7 @@ export function ChartTest(){
             }}
         >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
+        <XAxis dataKey="created_at" />
         <YAxis allowDecimals={false}/>
         <Tooltip />
         <Legend />
@@ -120,35 +115,5 @@ export function ChartTest(){
     </div>
 
     )
-}
-}
 
-/*  
-export default class ChartTest extends PureComponent{
-    render() {
-        return(
-            <ResponsiveContainer width="100%" height="100%">
-            <LineChart
-            width={500}
-            height={300}
-            data={data}
-            margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5,
-            }}
-            >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
-            <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-            </LineChart>
-        </ResponsiveContainer>
-        )
-    }
 }
-*/
