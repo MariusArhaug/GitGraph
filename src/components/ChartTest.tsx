@@ -1,14 +1,13 @@
 import React, {useEffect, useState} from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import axios from '../http-common'
-import { IICommit } from "content/types";
-
-/*
-export default function Content() {
-  const defaultCommits: IICommit[] = []
+import { ICommit } from "../content/types";
 
 
-  const [data, setData] = useState(defaultCommits)
+export default function Charts() {
+  const ICommit: ICommit[] = []
+
+  const [commits, setCommits] = useState(ICommit)
   const [error, setError]: [string, (error: string) => void] = useState('')
 
   useEffect(() => {
@@ -17,15 +16,15 @@ export default function Content() {
 
   const getCommits = () => {
     axios
-      .get<IICommit>(`repository/commits`)
+      .get<ICommit[]>('repository/commits')
       .then((response) => {
-        console.log(response.data)
-        setData(response.data)
+        setCommits(response.data)
       })
       .catch((error: Error) => {
+        console.error('ERROR:', error.message)
         setError(error.message)
-    })
-}
+      })
+  }
 
 /*
 const dummy = [
@@ -81,7 +80,7 @@ const dummy = [
   ];
 
 */
-/*
+
 
 export function ChartTest(){
     return (
