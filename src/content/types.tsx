@@ -1,15 +1,15 @@
-// https://docs.gitlab.com/ee/api/members.html
-export interface IMember {
-  id: number
-  username: string
+// https://docs.gitlab.com/ee/api/repositories.html#contributors
+export interface IContributor {
   name: string
+  email: string
+  commits: number
 }
 
 // https://docs.gitlab.com/ee/api/issues.html
 export interface IIssue {
   state: string
   description: string
-  assignee: JSON
+  assignees: []
   closed_at: string
   id: number
   title: string
@@ -23,18 +23,4 @@ export interface ICommit {
   created_at: string
   message: string
   web_url: string
-}
-
-//need to find a way to pass parameters id, all with_stats
-export interface IICommit {
-   id: number
-   title: ""
-   all : boolean
-   with_stats : boolean
-   
-}
-
-export interface IIContributors {
-  id: number
-  name: string
 }
