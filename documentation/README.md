@@ -1,6 +1,6 @@
 # Documentation
 
-### Folder structure:
+## Folder structure:
     gitGraphs
     ├── ...
     ├── documentation           # Documentation files
@@ -30,13 +30,21 @@ We chose Axios over fetch because of:
 Tailwind is a highly customizable CSS framework.\
 We chose to use Tailwind because of:
 - Eliminates the complexity of traditional CSS styling and makes the code more maintainable.
-- It's faster to write and makes it easier to stay consistent when styling.
+- It's faster to write and makes consistentency in styling easier.
 
 <br/>
 
 # API
 
-The API key used is defined in a .env in the root directory of the project. As the API key is sensitive data this is not pushed to the repository.
+Our API is implemented in [APIManager.tsx](./../src/content/APIManager.tsx)
+. Here we're using Axios to request data from the [the GitLab API](https://docs.gitlab.com/ee/api/api_resources.html) with our own project as the target project.
+
+The data we're fetching is:
+- Contributors
+- Issues
+- Commits
+
+The API key used to access this data is defined in a .env in the root directory of the project. As the API key is sensitive data this is not pushed to the repository.
 The .env file should have the following format: `REACT_APP_GITLAB_API_KEY=[api-key]`
 
 <br/>
@@ -52,4 +60,21 @@ A pipeline is a group of jobs that get executed in stages.\
 
  Additionally, a coverage-badge in the GitLab repo is updated when the master branch is updated.
 
+<br/>
 
+# Technological requirements from customer
+
+## Local storage
+Local and session storage
+## Component structure
+    index.tsx                               # React entry point
+        └── Layout.tsx                      # General layout, wraps everything.
+                ├──Navbar.tsx               # Navigation
+                ├──Header.tsx               # Top section of the website
+                ├──Main.tsx                 # Main component containing the actual data
+                │    └──APIManager.tsx      # Data from the API is served
+                └──Footer.tsx               # Footer of the website
+
+
+
+## Testing
