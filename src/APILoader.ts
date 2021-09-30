@@ -1,8 +1,7 @@
-import { IGitLabIssue, IGitLabUser } from './content/types'
-import { Issue } from './models/Issue'
+import { IGitLabIssue, IGitLabUser, ICommit } from './content/types'
 import axios from './http-common'
 import { AxiosError, AxiosResponse } from 'axios'
-import { User } from './models'
+import { User, Issue, Commit } from './models'
 import { arrayOrUndefined } from './utils/arrayOrUndefined'
 
 export class APILoader {
@@ -45,6 +44,29 @@ export class APILoader {
         })
       })
     )
+  }
+
+  public async getCommits(): Promise<Array<Commit> | undefined | string> {
+    try {
+      const response = await this.getFeed<ICommit>('repository/commits')
+
+      return response.data.map((commit: ICommit) => {
+        return new Commit({
+          short_id: commit.short_id,
+          title: commit.title,
+          committer_name: commit.committer_name,
+          created_at: commit.created_at,
+          message: commit.message,
+          web_url: commit.web_url,
+        })
+      })
+    } catch (e) {
+      const error = e as AxiosError
+      if (!error.response) {
+        return undefined
+      }
+      return `Status: ${error.response.status}`
+    }
   }
 
   public async getUsers(): Promise<Array<User> | undefined | string> {
