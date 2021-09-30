@@ -16,9 +16,8 @@ export function Layout({ children }: { children: any }) {
         <Charts />
 
         <div className="flex-grow">{children}</div>
-
-        <Footer />
       </div>
+      <Footer />
     </div>
   )
 }
