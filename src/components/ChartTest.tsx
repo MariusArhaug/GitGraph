@@ -3,22 +3,28 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'r
 import {ICommit} from '../content/types';
 import axios from '../http-common'
 import { AxiosError } from 'axios'
-//import _ from 'lodash'
+import _ from 'lodash'
 
 export function Charts() {
-  const data = []
   const ICommit: ICommit[] = []
   const [commits, setCommits] = useState(ICommit)
   const [error, setError]: [string, (error: string) => void] = useState('')
+  commits.map((commit) => {
+    const word = commit.created_at.split("T")
+    console.warn(word[0])
+    commit.created_at = word[0]
+    console.warn(commit.created_at)
+  })
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const commitsPrPerson = _.groupBy(commits, 'committer_name')
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const commitsPerDay = _.groupBy(commits, 'created_at')
 
 
   useEffect(() => {
     getCommits()
-    for (const key of ICommit){
-      data.push({key:key.created_at, :key.committer_name})
-    }
+    console.warn(commitsPerDay)
   }, [])
 
   const getCommits = () => {
@@ -100,31 +106,80 @@ const dummy = [
 
 
     return (
+
+      
       <div>
-              <LineChart
-                  width={500}
-                  height={300}
-                  data={commits}
-                  margin={{
-                      top: 5,
-                      right: 30,
-                      left: 20,
-                      bottom: 5
-                  }}
-              >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="created_at" />
-              <YAxis allowDecimals={false}/>
-              <Tooltip />
-              <Legend />
-              <Line
-                type="monotone"
-                stroke="#8884d8"
-                activeDot={{ r: 8 }}
-                dataKey = "committer_name"
-              />
-            </LineChart>
-            {error && <p className="error">{error}</p>}
+        {Object.entries(commitsPerDay).map(([key, value]) => {
+          return (
+            <li className="mt-1 mb-8" key={key}>
+              <h3 className="mt-1 mb-1 text-2xl">{key}</h3>
+
+              <ul>
+                {value.map((commit) => {
+                  <LineChart
+                    width={500}
+                    height={300}
+                    data={value} //here we have to have same data as in dummy [{date: date, name_of_person: nb of commits}] maybe make a new list with all that data
+                    margin={{
+                        top: 5,
+                        right: 30,
+                        left: 20,
+                        bottom: 5
+                    }}
+                >
+                  
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey={commit.created_at} />
+                <YAxis allowDecimals={false}/>
+                <Tooltip />
+                <Legend />
+                <Line
+                  type="monotone"
+                  stroke="#8884d8"
+                  activeDot={{ r: 8 }}
+                  dataKey = {commit.committer_name}
+                />
+              </LineChart>
+                  console.warn(commit.created_at)
+                })}
+              </ul>
+            </li>
+          )
+        })}
+        {error && <p className="error">{error}</p>}
+{/*         
+        {Object.entries(commitsPerDay).map(([key, _values]) => {
+          return(
+            {value.map((commit) => {
+              console.warn(commits)
+            })} 
+            ) 
+          })}
+                  <LineChart
+                      width={500}
+                      height={300}
+                      data={commits}
+                      margin={{
+                          top: 5,
+                          right: 30,
+                          left: 20,
+                          bottom: 5
+                      }}
+                  >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis allowDecimals={false}/>
+                  <Tooltip />
+                  <Legend />
+                  <Line
+                    type="monotone"
+                    stroke="#8884d8"
+                    activeDot={{ r: 8 }}
+                    dataKey = "Stefan_Djordje_Tomic"
+                  />
+                </LineChart>
+                {error && <p className="error">{error}</p>} */}
+            
       </div>
 
     )
