@@ -1,29 +1,39 @@
 // import { ICommit } from './../content/types'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 // import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 // import _ from 'lodash'
 import { APILoader } from './../APILoader'
+import { Commit } from './../models'
 
 export function Charts() {
+  const loader = new APILoader()
 
-const loader = new APILoader()
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [commit, setCommit] = useState<Commit[]>([])
 
-    const getCommits = async() => await loader.getCommits()
-    .then((result) => {
-      return result
+  async function getCommits() {
+    await loader.getCommits().then((response) => {
+      if (!response) {
+        return
+      }
+      if (typeof response === 'string') {
+        console.warn(response)
+      } else if (typeof response === undefined) {
+        console.warn(response)
+      } else {
+        setCommit(response)
+      }
     })
-    .catch((err) => {
-      console.error(err)
-    })
+  }
 
-  console.warn(getCommits())
+  useEffect(() => {
+    void getCommits()
+  }, [commit])
 
+  console.warn(commit)
 
   // const commitsPrPerson = _.groupBy(getCommits(), 'committer_name')
-
-
 
   // const dummy = [
   //     {
