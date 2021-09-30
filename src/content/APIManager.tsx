@@ -103,7 +103,7 @@ export default function FetchData() {
       <p>Issues completed: {presentageIssuesCompleted * 100}%</p>
       <div className="grid grid-cols-3 gap-4 p-1">
       <ul className="posts">
-        <h1 className="text-4xl">Top 5 Contributors</h1>
+        <h1 className="text-4xl">Top 4 Contributors</h1>
         {top5Contributors.map((contributor) => (
           <li key={contributor.name}>
             <h3>{contributor.name}</h3>
