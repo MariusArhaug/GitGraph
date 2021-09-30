@@ -1,8 +1,7 @@
-import { IGitLabIssue, IGitLabUser } from './content/types'
-import { Issue } from './models/Issue'
+import { IGitLabIssue, IGitLabUser, IGitLabContributor } from './content/types'
 import axios from './http-common'
 import { AxiosError, AxiosResponse } from 'axios'
-import { User } from './models'
+import { User, Issue, Contributor } from './models'
 import { arrayOrUndefined } from './utils/arrayOrUndefined'
 
 export class APILoader {
@@ -86,5 +85,27 @@ export class APILoader {
         return false
       })
     )
+  }
+
+  public async getContributors(): Promise<
+    Array<Contributor> | undefined | string
+  > {
+    try {
+      const response = await this.getFeed<IGitLabContributor>('contributors')
+
+      return response.data.map((contributor: IGitLabContributor) => {
+        return new Contributor({
+          commits: contributor.commits,
+          email: contributor.email,
+          name: contributor.name,
+        })
+      })
+    } catch (e) {
+      const error = e as AxiosError
+      if (!error.response) {
+        return undefined
+      }
+      return `Status: ${error.response.status}`
+    }
   }
 }

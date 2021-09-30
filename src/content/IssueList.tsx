@@ -2,15 +2,22 @@ import React from "react";
 import { APILoader } from '../APILoader'
 import { IssueCard } from "../components/IssueCard";
 import { Issue } from "../models";
+import { ReactComponent } from "./ReactComponent";
 
 interface IIssueListState {
   issues: Issue[]
   loader: APILoader
   errorMessage: string
 }
-export default class IssueList extends React.Component<{ loader: APILoader }, IIssueListState> {
 
-  constructor(props: { loader: APILoader }) {
+interface IIssueListProps {
+  loader: APILoader
+  className?: string
+  showPrecentage?: boolean
+}
+export class IssueList extends ReactComponent<IIssueListProps, IIssueListState> {
+
+  constructor(props: IIssueListProps) {
     super(props)
     this.state = {
       issues: [],
@@ -47,14 +54,27 @@ export default class IssueList extends React.Component<{ loader: APILoader }, II
 
   }
 
+  presentageIssuesCompleted() {
+    return this.state.issues.filter((issue) => issue.getState() === 'closed').length / this.state.issues.length
+  }
+
   render() {
     const { issues, errorMessage } = this.state
+    const { showPrecentage } = this.props
     return (
-      <div className="text-center-main">
-        {issues.map((issue: Issue) => (
-          <IssueCard issue={issue} />
-        ))}
-        {errorMessage && <p className="error">{errorMessage}</p>}
-      </div>)
+      <>
+        <div className={`text-center-main ${this.getClassName()}`}>
+          {issues.slice(0, 5).map((issue: Issue) => (
+            <IssueCard issue={issue} />
+          ))}
+          {errorMessage && <p className="error">{errorMessage}</p>}
+        </div>
+        {showPrecentage &&
+          <div className={`text-center-main ${this.getClassName()}`}>
+            <p className="text-4xl">Issues completed: {this.presentageIssuesCompleted() * 100}%</p>
+          </div>
+        }
+      </>
+    )
   }
 }
