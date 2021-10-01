@@ -1,5 +1,13 @@
 import React from 'react'
-import { LineChart } from 'recharts';
+import {
+  LineChart,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Legend,
+  Line,
+  Tooltip,
+} from 'recharts'
 import _ from 'lodash'
 import { APILoader } from '../APILoader'
 import { Commit, Contributor } from '../models'
@@ -8,10 +16,12 @@ interface IChartsState {
   loader: APILoader
   errorMessage: string
   commits: Commit[]
-  contributors: Contributor[];
+  contributors: Contributor[]
 }
-export class Charts extends React.Component<{ loader: APILoader }, IChartsState>{
-
+export class Charts extends React.Component<
+  { loader: APILoader },
+  IChartsState
+> {
   constructor(props: { loader: APILoader }) {
     super(props)
     this.state = {
@@ -19,7 +29,6 @@ export class Charts extends React.Component<{ loader: APILoader }, IChartsState>
       contributors: [],
       loader: props.loader,
       errorMessage: '',
-
     }
   }
 
@@ -38,7 +47,7 @@ export class Charts extends React.Component<{ loader: APILoader }, IChartsState>
   //commitsPrPerson = _.groupBy(this.state.commits, 'committer_name')
 
   componentDidMount() {
-    void this.getCommits();
+    void this.getCommits()
     void this.getContributors()
   }
 
@@ -55,28 +64,24 @@ export class Charts extends React.Component<{ loader: APILoader }, IChartsState>
 
     if (typeof response === 'string') {
       this.setError(response)
-    }
-    else {
-      this.setCommits(response);
+    } else {
+      this.setCommits(response)
     }
   }
 
   async getContributors(): Promise<void> {
-    const response = await this.state.loader.geContributors();
+    const response = await this.state.loader.geContributors()
 
     if (!response) {
-      return;
+      return
     }
 
     if (typeof response === 'string') {
       this.setError(response)
-    }
-
-    else {
+    } else {
       this.setContributors(response)
     }
   }
-
 
   // const dummy = [
   //     {
@@ -90,85 +95,91 @@ export class Charts extends React.Component<{ loader: APILoader }, IChartsState>
 
   //here we have to have same data as in dummy[{ date: date, name_of_person: nb of commits }] maybe make a new list with all that data
   getLineChartData() {
-    const groupByDate: Record<string, Commit[]> = _.groupBy(this.state.commits, (commit: Commit) => {
-      return commit.getCreatedAtDays()
-    })
+    const groupByDate: Record<string, Commit[]> = _.groupBy(
+      this.state.commits,
+      (commit: Commit) => {
+        return commit.getCreatedAtDays()
+      }
+    )
 
-    const contributorNames = this.state.contributors.map((contributor: Contributor) => {
-      return contributor.getName()
-    })
+    const contributorNames = this.state.contributors.map(
+      (contributor: Contributor) => {
+        return contributor.getName()
+      }
+    )
 
-    return Object.entries(groupByDate).map(([date, commits]: [string, Commit[]]) => {
-      const lineChartValue: Record<string, number | string> = {
-        name: date
-      };
-
-      commits.forEach((commit: Commit) => {
-        const userName = commit.getCommitterName()
-        if (!(userName in lineChartValue)) {
-          lineChartValue[userName] = 1
+    return Object.entries(groupByDate).map(
+      ([date, commits]: [string, Commit[]]) => {
+        const lineChartValue: Record<string, number | string> = {
+          "name": date
         }
-        else {
-          (lineChartValue[userName] as number)++
-        }
-      })
 
+        commits.forEach((commit: Commit) => {
+          const userName = commit.getCommitterName()
+          if (!(userName in lineChartValue)) {
+            lineChartValue[userName] = 1
+          } else {
+            ;(lineChartValue[userName] as number)++
+          }
+        })
 
-      contributorNames.forEach((name: string) => {
-        if (!(name in lineChartValue)) {
-          lineChartValue[name] = 0
-        }
-      })
+        contributorNames.forEach((name: string) => {
+          if (!(name in lineChartValue)) {
+            lineChartValue[name] = 0
+          }
+        })
 
-      return lineChartValue
-    })
+        return lineChartValue
+      }
+    )
 
     // eslint-disable-next-line
     // console.log(group2)
   }
 
   render() {
-    //const { commits } = this.state
+    const { commits } = this.state
+    console.warn(this.getLineChartData())
     return (
-      <div>
+      <div className="lol">
         <LineChart
-          width={500}
+          width={100}
           height={300}
           data={this.getLineChartData()}
           margin={{
             top: 5,
             right: 30,
             left: 20,
-            bottom: 5
-          }}>
-
+            bottom: 5,
+          }}
+        >
+          {commits.length &&
+            this.getLineChartData().map((value) => {
+              ;<>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey={value.name} />
+                <YAxis allowDecimals={false} />
+                <Tooltip />
+                <Legend />
+                {value &&
+                  Object.entries(value).filter((e) => e[0] !== 'name').map(
+                    ([key, _value]: [string, string | number]) => {
+                      
+                      return (<>
+                        <Line
+                          type="monotone"
+                          stroke="#8884d8" // random
+                          activeDot={{ r: 8 }}
+                          dataKey={key}
+                        />
+                      </>
+                      )
+                    }
+                  )}
+              </>
+            })}
         </LineChart>
       </div>
     )
   }
 }
-{/* {commits && this.getLineChartData().map((value: Record<string, string | number>) =>
-          <LineChart
-            width={500}
-            height={300}
-            data={value}
-            margin={{
-              top: 5,
-              right: 30,
-              left: 20,
-              bottom: 5
-            }}
-          >
-
-            <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey={commit.created_at} />
-          <YAxis allowDecimals={false} />
-          <Tooltip />
-          <Legend />
-          <Line
-            type="monotone"
-            stroke="#8884d8"
-            activeDot={{ r: 8 }}
-            dataKey={commit.committer_name}
-          />
-          </LineChart> */}
