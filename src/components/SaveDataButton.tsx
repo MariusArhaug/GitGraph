@@ -1,10 +1,13 @@
+import { APILoader } from '../APILoader';
 import { WebStorage } from './WebStorage';
 
 
-const SaveDataButton = () => {
+export const SaveDataButton = () => {
 
     const saveData = () => {
-        const webStorage = new WebStorage({});
+        const loader = new APILoader()
+        console.warn(loader)
+        const webStorage = new WebStorage({loader});
         webStorage.saveToSessionStorage()
     }
   
@@ -19,7 +22,6 @@ const SaveDataButton = () => {
     )
   }
 
-  
   export default SaveDataButton;
   
   

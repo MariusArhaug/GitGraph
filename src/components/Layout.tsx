@@ -2,9 +2,9 @@ import React from 'react'
 import { Navbar } from './Navbar'
 import { Footer } from './Footer'
 import { Header } from './Header'
-import SaveDataButton from './SaveDataButton'
 
 import '../styles/global.css'
+import { SaveDataButton } from './SaveDataButton'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function Layout({ children }: { children: any }) {

@@ -15,6 +15,7 @@ export class WebStorage extends React.Component {
     saveToSessionStorage() {
       const loader: APILoader = this.state.loader
       const issueList: IssueList = new IssueList({loader})
+      console.warn(issueList)
       window.sessionStorage.setItem('issueList', JSON.stringify(issueList))
     }
 
