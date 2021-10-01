@@ -64,6 +64,7 @@ export class IssueList extends ReactComponent<IIssueListProps, IIssueListState> 
     return (
       <>
         <div className={`text-center-main ${this.getClassName()}`}>
+          <h1 className="text-center px-20 font-bold">Last 5 issues</h1>
           {issues.slice(0, 5).map((issue: Issue) => (
             <IssueCard issue={issue} />
           ))}
@@ -71,7 +72,7 @@ export class IssueList extends ReactComponent<IIssueListProps, IIssueListState> 
         </div>
         {showPrecentage &&
           <div className={`text-center-main ${this.getClassName()}`}>
-            <p className="text-4xl">Issues completed: {this.presentageIssuesCompleted() * 100}%</p>
+            <p className="md:text-4xl">Issues completed: {this.presentageIssuesCompleted() * 100}%</p>
           </div>
         }
       </>

@@ -57,6 +57,7 @@ export class UserList extends ReactComponent<IUserListProps, IUserListState> {
     const { users, errorMessage } = this.state
     return (
       <div className={`w-3/6 m-auto text-center flex justify-between flex-wrap ${this.getClassName()}`}>
+        <h1 className=" font-bold md:px-40">Top contributors</h1>
         {users.map((user: User) => (
           <UserCard user={user} />
         ))}
