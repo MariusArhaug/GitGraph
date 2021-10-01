@@ -6,7 +6,7 @@ interface IContentState {
     loader: APILoader
   }
   
-export class Content extends React.Component<Record<string, unknown>, IContentState> {
+export class WebStorage extends React.Component<Record<string, unknown>, IContentState> {
   
     state: IContentState = {
       loader: new APILoader()
