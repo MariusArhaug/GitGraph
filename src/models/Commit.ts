@@ -1,17 +1,17 @@
 import { Model } from './Model'
 
 export interface ICommit {
-  short_id: string
+  id: string
   title: string
-  committer_name: string
-  created_at: string
+  committerName: string
+  createdAt: string
   message: string
-  web_url: string
+  webUrl: string
 }
 
 export class Commit extends Model<ICommit> {
-  public getShortId(): string {
-    return this.props.short_id
+  public getId(): string {
+    return this.props.id
   }
 
   public getTitle(): string {
@@ -19,11 +19,15 @@ export class Commit extends Model<ICommit> {
   }
 
   public getCommitterName(): string {
-    return this.props.committer_name
+    return this.props.committerName
   }
 
   public getCreatedAt(): string {
-    return this.props.created_at
+    return new Date(this.props.createdAt).toLocaleString()
+  }
+
+  public getCreatedAtDays(): string {
+    return this.getCreatedAt().split(',')[0]
   }
 
   public getMessage(): string {
@@ -31,6 +35,6 @@ export class Commit extends Model<ICommit> {
   }
 
   public getWebUrl(): string {
-    return this.props.web_url
+    return this.props.webUrl
   }
 }
