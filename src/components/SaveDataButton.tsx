@@ -1,17 +1,15 @@
 import { WebStorage } from './WebStorage';
-import IssueList from '../content/IssueList';
 
 
-const SaveDataButton = ( props: { webStorage: WebStorage, issueList: IssueList } ) => {
-
-    const { webStorage } = props;
+const SaveDataButton = () => {
 
     const saveData = () => {
+        const webStorage = new WebStorage({});
         webStorage.saveToSessionStorage()
     }
   
     return(
-        <div onChange={saveData}>
+        <div>
             <button onClick={saveData}>
                 Save Data
             </button>
