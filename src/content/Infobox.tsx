@@ -14,7 +14,7 @@ export class InfoBox extends React.Component<{ loader: APILoader }, IInfoBoxStat
   render() {
     const { loader } = this.state
     return (
-      <div className=" flex justify-between flex-shrink bg-gray-700 p-4">
+      <div id="infobox" className=" flex justify-between flex-shrink bg-dark p-4">
         <UserList loader={loader} />
         <IssueList loader={loader} showPrecentage={true} />
       </div>

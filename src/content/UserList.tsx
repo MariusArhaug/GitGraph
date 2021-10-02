@@ -48,7 +48,7 @@ export class UserList extends ReactComponent<IUserListProps, IUserListState> {
     }
 
     else {
-      this.setUsers(response.slice(0, 3))
+      this.setUsers(response.slice(0, 4))
     }
 
   }
