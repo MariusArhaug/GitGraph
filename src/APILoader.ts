@@ -4,32 +4,37 @@ import axios from './http-common'
 import { AxiosError, AxiosResponse } from 'axios'
 import { User } from './models'
 import { arrayOrUndefined } from './utils/arrayOrUndefined'
+import { WebStorageCache } from './WebStorageCache'
 
 export class APILoader {
-  private async getFeed<T>(parameter: string): Promise<AxiosResponse<T[]>> {
-    return axios.get<T[]>(parameter)
+  readonly cahce: WebStorageCache
+
+  constructor() {
+    this.cahce = new WebStorageCache()
+  }
+
+  private async load<T>(parameter: string): Promise<AxiosResponse<T>> {
+    return axios.get<T>(parameter)
+  }
+
+  private getCache<T>(key: string): AxiosResponse<T> | undefined {
+    return this.cahce.getCache(key)
+  }
+
+  private async getFeed<T>(key: string): Promise<AxiosResponse<T>> {
+    const sessionChace = this.getCache<T>(key)
+
+    if (!sessionChace) {
+      const response = await this.load<T>(key)
+      this.cahce.setCahce(key, response)
+      return response
+    }
+    return sessionChace
   }
 
   public async getIssues(): Promise<Array<Issue> | undefined | string> {
     try {
-      
-      const localIssues = window.sessionStorage.getItem('issues')
-      let response: AxiosResponse<IGitLabIssue[]>
-      if (localIssues) {
-        const parsedJSON = JSON.parse(localIssues) as IGitLabIssue[]
-        response = {
-          headers: {},
-          config: {},
-          status: 418,
-          statusText: 'nice',
-          data: parsedJSON
-        }
-        console.warn('LOADING DATA FROMSESSIONSTORAGE')
-      } else {
-        response = await this.getFeed<IGitLabIssue>('issues')
-        window.sessionStorage.setItem('issues', JSON.stringify(response.data))
-        console.warn('FETCHING DATA FROM API')
-      }
+      const response = await this.getFeed<IGitLabIssue[]>('issues')
 
       return response.data.map((issue: IGitLabIssue) => {
         return new Issue({
@@ -66,7 +71,7 @@ export class APILoader {
 
   public async getUsers(): Promise<Array<User> | undefined | string> {
     try {
-      const response = await this.getFeed<IGitLabUser>('users')
+      const response = await this.getFeed<IGitLabUser[]>('users')
 
       return response.data.map((user: IGitLabUser) => {
         return new User({
