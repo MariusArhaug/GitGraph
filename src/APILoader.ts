@@ -24,7 +24,7 @@ export class APILoader {
           statusText: 'nice',
           data: parsedJSON
         }
-        console.warn('LOADING DATA FROM SESSIONSTORAGE')
+        console.warn('LOADING DATA FROMSESSIONSTORAGE')
       } else {
         response = await this.getFeed<IGitLabIssue>('issues')
         window.sessionStorage.setItem('issues', JSON.stringify(response.data))

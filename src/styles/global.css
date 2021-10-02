@@ -43,3 +43,8 @@ p {
   bg-bestGray-light
   shadow-2xl text-center;
 }
+
+input:checked ~ .dot {
+  transform: translateX(100%);
+  background-color: #48bb78;
+}
