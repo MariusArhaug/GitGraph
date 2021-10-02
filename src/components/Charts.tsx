@@ -6,11 +6,12 @@ import {
   YAxis,
   Legend,
   Line,
-  Tooltip,
+  ResponsiveContainer,
 } from 'recharts'
 import _ from 'lodash'
 import { APILoader } from '../APILoader'
 import { Commit, Contributor } from '../models'
+import { getRandomColor } from '../utils/getRandomColor'
 
 interface IChartsState {
   loader: APILoader
@@ -43,8 +44,6 @@ export class Charts extends React.Component<
   setError(errorMessage: string) {
     this.setState({ errorMessage })
   }
-
-  //commitsPrPerson = _.groupBy(this.state.commits, 'committer_name')
 
   componentDidMount() {
     void this.getCommits()
@@ -83,17 +82,6 @@ export class Charts extends React.Component<
     }
   }
 
-  // const dummy = [
-  //     {
-  //       name: '25/09/21',
-  //       Ole_Alexander_Høyby: 0,
-  //       Marius_Arhaug: 1,
-  //       patrick_helvik_legendre: 0,
-  //       Stefan_Djordje_Tomic: 1,
-  //     },
-  //   ];
-
-  //here we have to have same data as in dummy[{ date: date, name_of_person: nb of commits }] maybe make a new list with all that data
   getLineChartData() {
     const groupByDate: Record<string, Commit[]> = _.groupBy(
       this.state.commits,
@@ -111,17 +99,8 @@ export class Charts extends React.Component<
     return Object.entries(groupByDate).map(
       ([date, commits]: [string, Commit[]]) => {
         const lineChartValue: Record<string, number | string> = {
-          "name": date
+          "date": date
         }
-
-        commits.forEach((commit: Commit) => {
-          const userName = commit.getCommitterName()
-          if (!(userName in lineChartValue)) {
-            lineChartValue[userName] = 1
-          } else {
-            (lineChartValue[userName] as number)++
-          }
-        })
 
         contributorNames.forEach((name: string) => {
           if (!(name in lineChartValue)) {
@@ -129,49 +108,46 @@ export class Charts extends React.Component<
           }
         })
 
+        commits.forEach((commit: Commit) => {
+          (lineChartValue[commit.getCommitterName()] as number)++
+        })
         return lineChartValue
       }
     )
   }
 
   render() {
-    const { commits } = this.state
+    const { contributors } = this.state
     console.warn(this.getLineChartData())
     return (
-      <div className="lol">
-        <LineChart
-          width={100}
-          height={300}
-          data={this.getLineChartData()}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          {commits.length &&
-            this.getLineChartData().map((value) => (
-              <>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey={value.name} />
-                <YAxis allowDecimals={false} />
-                <Tooltip />
-                <Legend />
-                {value && Object.entries(value).filter((e) => e[0] !== 'name').map(
-                  ([key, _value]: [string, string | number]) => (
-                    <Line
-                      type="monotone"
-                      stroke="#8884d8" // random
-                      activeDot={{ r: 8 }}
-                      dataKey={key}
-                    />
-                  )
-                )}
-              </>
+      <div className="charts-container">
+        <ResponsiveContainer width="90%" height={400}>
+          <LineChart
+            data={this.getLineChartData()}
+            margin={{
+              top: 5,
+              right: 30,
+              left: 20,
+              bottom: 5,
+            }}
+
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="date" label={{ value: 'Date', position: 'bottom' }} />
+            <YAxis label={{ value: 'Number of commits', angle: -90, position: 'insideLeft', fill: 'white' }} />
+            <Legend />
+            {contributors.map((contributor: Contributor) => (
+              <Line
+                type="monotone"
+                stroke={getRandomColor()}
+                activeDot={{ r: 8 }}
+                dataKey={contributor.getName()}
+              />
             ))}
-        </LineChart>
+          </LineChart>
+        </ResponsiveContainer>
       </div>
     )
+
   }
 }
