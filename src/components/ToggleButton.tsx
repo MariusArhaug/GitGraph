@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 
 
 interface IToggleButtonProps {
+    id: string,
     text?: string
 }
 
@@ -22,7 +23,7 @@ export function ToggleButton(props: IToggleButtonProps) {
     }
 
     const saveToLocalStorage = () => {
-        window.localStorage.setItem('buttonToggled', JSON.stringify(toggled))
+        window.localStorage.setItem('buttonToggled_id:_' + props.id, JSON.stringify(toggled))
     }
 
     const fetchFromLocalStorage = () => {
