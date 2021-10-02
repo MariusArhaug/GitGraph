@@ -7,9 +7,12 @@ import { useEffect, useState } from "react";
 // }
 
 
-export function SaveButtonFunc() {
+interface ISaveButtonProps {
+    text?: string
+}
 
-    // const { defaultChecked, disabled, className } = props;
+export function SaveButtonFunc(props: ISaveButtonProps) {
+
     const [toggled, setToggle] = useState(false)
 
     const toggle = () => {
@@ -24,7 +27,6 @@ export function SaveButtonFunc() {
 
     const fetchFromLocalStorage = () => {
         const buttonToggledString = window.localStorage.getItem('buttonToggled')
-        console.warn(JSON.parse(buttonToggledString!))
         if (buttonToggledString) {
             setToggle(JSON.parse(buttonToggledString))
         }
@@ -56,8 +58,8 @@ export function SaveButtonFunc() {
                     <div id="dot" className="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
 
                     </div>
-                    <div className="ml-3 text-gray-700 font-medium">
-                    Toggle Issues
+                    <div className="ml-3 text-gray-700 font-medium dark:text-gray-100">
+                        {props.text ? props.text : ''}
                     </div>
                 </label>
             </div>
