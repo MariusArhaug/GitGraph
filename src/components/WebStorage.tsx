@@ -2,13 +2,13 @@ import { APILoader } from "../APILoader";
 import React from "react";
 import IssueList from '../content/IssueList'
 
-interface IContentState {
+interface IWebStorageState {
     loader: APILoader
   }
   
 export class WebStorage extends React.Component {
   
-    state: IContentState = {
+    state: IWebStorageState = {
       loader: new APILoader()
     }
 
