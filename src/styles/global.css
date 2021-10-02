@@ -38,13 +38,19 @@ p {
 }
 
 .infobox {
-  @apply text-gray-900 dark:text-white
+  @apply text-white
   /* grid grid-cols-3 gap-4 p-8 */
-  bg-bestGray-light
   shadow-2xl text-center;
 }
 
 input:checked ~ .dot {
   transform: translateX(100%);
   background-color: #48bb78;
+}
+
+@media screen and (max-width: 640px){
+  #infobox{
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
 }

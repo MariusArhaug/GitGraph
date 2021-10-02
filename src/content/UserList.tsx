@@ -2,15 +2,21 @@ import React from "react";
 import { APILoader } from '../APILoader'
 import { UserCard } from "../components";
 import { User } from '../models'
+import { ReactComponent } from "./ReactComponent";
 
-interface IIssueListState {
+interface IUserListState {
   users: User[]
   loader: APILoader
   errorMessage: string
 }
-export default class IssueList extends React.Component<{ loader: APILoader }, IIssueListState> {
 
-  constructor(props: { loader: APILoader }) {
+interface IUserListProps {
+  loader: APILoader
+  className?: string
+}
+export class UserList extends ReactComponent<IUserListProps, IUserListState> {
+
+  constructor(props: IUserListProps) {
     super(props)
     this.state = {
       users: [],
@@ -42,7 +48,7 @@ export default class IssueList extends React.Component<{ loader: APILoader }, II
     }
 
     else {
-      this.setUsers(response)
+      this.setUsers(response.slice(0, 4))
     }
 
   }
@@ -50,7 +56,8 @@ export default class IssueList extends React.Component<{ loader: APILoader }, II
   render() {
     const { users, errorMessage } = this.state
     return (
-      <div className="w-3/6 m-auto text-center flex justify-between flex-wrap">
+      <div className={`w-3/6 m-auto text-center flex justify-between flex-wrap ${this.getClassName()}`}>
+        <h1 className=" font-bold md:px-40">Top contributors</h1>
         {users.map((user: User) => (
           <UserCard user={user} />
         ))}

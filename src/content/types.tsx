@@ -19,9 +19,13 @@ export interface IGitLabUser {
 }
 
 export interface IGitLabCommit {
-  id: string;
-  tag: string;
-  description?: string;
+  map(arg0: (commit: IGitLabCommit) => import("../models").Commit): import("../models").Commit[];
+  short_id: string
+  title: string
+  committer_name: string
+  created_at: string
+  message: string
+  web_url: string
 }
 
 export interface IGitLabMilestone {
@@ -31,28 +35,9 @@ export interface IGitLabMilestone {
   state: string;
 }
 
-export interface IContributor {
+export interface IGitLabContributor {
+  map(arg0: (contributor: IGitLabContributor) => import("../models").Contributor): import("../models").Contributor[];
   name: string
   email: string
   commits: number
-}
-
-// https://docs.gitlab.com/ee/api/issues.html
-export interface IIssue {
-  id: number
-  title: string
-  state: string
-  description: string
-  assignees: []
-  closed_at: string
-}
-// https://docs.gitlab.com/ee/api/commits.html
-export interface ICommit {
-  short_id: string
-  title: string
-  committer_name: string
-  created_at: string
-  message: string
-  web_url: string
-
 }
