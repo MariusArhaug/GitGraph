@@ -17,9 +17,8 @@ export function Layout({ children }: { children: any }) {
         <SaveDataButtonClass/>
         <ToggleButton/>
         <div className="flex-grow">{children}</div>
-
-        <Footer />
       </div>
+      <Footer />
     </div>
   )
 }
