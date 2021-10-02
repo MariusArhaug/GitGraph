@@ -77,7 +77,7 @@ export class APILoader {
 
   public async getCommits(): Promise<Array<Commit> | undefined | string> {
     try {
-      const response = await this.getFeed<IGitLabCommit>('repository/commits')
+      const response = await this.getFeed<IGitLabCommit>('repository/commits?per_page=100')
 
       return arrayOrUndefined(
         // eslint-disable-next-line

@@ -7,11 +7,11 @@ import { useEffect, useState } from "react";
 // }
 
 
-interface ISaveButtonProps {
+interface IToggleButtonProps {
     text?: string
 }
 
-export function SaveButtonFunc(props: ISaveButtonProps) {
+export function ToggleButton(props: IToggleButtonProps) {
 
     const [toggled, setToggle] = useState(false)
 
