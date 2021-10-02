@@ -25,6 +25,7 @@ test:
   dependencies:
     - build
   script:
+    - touch .env && echo "REACT_APP_GITLAB_API_KEY="$REACT_APP_GITLAB_API_KEY .env
     - yarn test:ci
   artifacts:
     when: always
@@ -36,8 +37,8 @@ test:
 eslint:
   stage: lint
   before_script:
-    - yarn add --dev eslint \ 
-      eslint-config-prettier \ 
+    - yarn add --dev eslint \
+      eslint-config-prettier \
       eslint-plugin-prettier
-  script: 
-    - yarn eslint src/ 
+  script:
+    - yarn eslint src/
