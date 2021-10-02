@@ -42,3 +42,11 @@ p {
   /* grid grid-cols-3 gap-4 p-8 */
   shadow-2xl text-center;
 }
+
+
+@media screen and (max-width: 640px){
+  #infobox{
+    flex-wrap: wrap;
+    flex-direction: row;
+  }
+}

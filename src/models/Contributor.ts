@@ -15,7 +15,7 @@ export class Contributor extends Model<IContributor> {
     return this.props.email
   }
 
-  public getCommits(): number {
+  public getCommitNumber(): number {
     return this.props.commits
   }
 }
