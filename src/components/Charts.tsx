@@ -119,7 +119,7 @@ export class Charts extends React.Component<
           if (!(userName in lineChartValue)) {
             lineChartValue[userName] = 1
           } else {
-            ;(lineChartValue[userName] as number)++
+            (lineChartValue[userName] as number)++
           }
         })
 
@@ -132,9 +132,6 @@ export class Charts extends React.Component<
         return lineChartValue
       }
     )
-
-    // eslint-disable-next-line
-    // console.log(group2)
   }
 
   render() {
@@ -154,30 +151,25 @@ export class Charts extends React.Component<
           }}
         >
           {commits.length &&
-            this.getLineChartData().map((value) => {
-              ;<>
+            this.getLineChartData().map((value) => (
+              <>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey={value.name} />
                 <YAxis allowDecimals={false} />
                 <Tooltip />
                 <Legend />
-                {value &&
-                  Object.entries(value).filter((e) => e[0] !== 'name').map(
-                    ([key, _value]: [string, string | number]) => {
-                      
-                      return (<>
-                        <Line
-                          type="monotone"
-                          stroke="#8884d8" // random
-                          activeDot={{ r: 8 }}
-                          dataKey={key}
-                        />
-                      </>
-                      )
-                    }
-                  )}
+                {value && Object.entries(value).filter((e) => e[0] !== 'name').map(
+                  ([key, _value]: [string, string | number]) => (
+                    <Line
+                      type="monotone"
+                      stroke="#8884d8" // random
+                      activeDot={{ r: 8 }}
+                      dataKey={key}
+                    />
+                  )
+                )}
               </>
-            })}
+            ))}
         </LineChart>
       </div>
     )
