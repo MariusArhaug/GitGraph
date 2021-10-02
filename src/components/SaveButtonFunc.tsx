@@ -30,17 +30,19 @@ export function SaveButtonFunc() {
         }
     }
 
-    // useEffect(() => {
-    //         saveToLocalStorage()
-    //     },
-    //     [toggled]
-    // )
+
 
     useEffect(() => {
         fetchFromLocalStorage()
         },
         []
     )
+
+    useEffect(() => {
+        saveToLocalStorage()
+    },
+    [toggled]
+)
 
     return(
         
