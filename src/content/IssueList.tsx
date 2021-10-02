@@ -25,6 +25,10 @@ export default class IssueList extends React.Component<{ loader: APILoader }, II
     })
   }
 
+  getIssues(): Issue[] {
+    return this.state.issues
+  }
+
   setError(errorMessage: string) {
     this.setState({
       errorMessage
@@ -44,7 +48,7 @@ export default class IssueList extends React.Component<{ loader: APILoader }, II
     }
 
     else {
-      console.warn(response)
+      //console.warn(response)
       this.setIssues(response)
     }
 

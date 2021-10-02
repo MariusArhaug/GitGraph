@@ -1,22 +1,21 @@
 import { APILoader } from "../APILoader";
-import React from "react";
 import IssueList from '../content/IssueList'
 
-interface IWebStorageState {
-    loader: APILoader
-  }
-  
-export class WebStorage extends React.Component {
-  
-    state: IWebStorageState = {
-      loader: new APILoader()
+export class WebStorage {
+    
+    readonly state : Record<string, APILoader> 
+
+    constructor(props: {loader: APILoader}) {
+      this.state = {
+        loader: props.loader
+      }
     }
 
     saveToSessionStorage() {
-      const loader: APILoader = this.state.loader
-      const issueList: IssueList = new IssueList({loader})
-      console.warn(issueList)
-      window.sessionStorage.setItem('issueList', JSON.stringify(issueList))
+      const issueList: IssueList = new IssueList({loader: this.state.loader})
+      console.warn("penis")
+      console.warn(Promise.all(issueList.getIssues()))
+      window.sessionStorage.setItem('issueList', JSON.stringify(issueList.getIssues()))
     }
 
     loadFromSessionStorage() {

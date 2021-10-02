@@ -12,7 +12,24 @@ export class APILoader {
 
   public async getIssues(): Promise<Array<Issue> | undefined | string> {
     try {
-      const response = await this.getFeed<IGitLabIssue>('issues')
+      
+      const localIssues = window.sessionStorage.getItem('issues')
+      let response: AxiosResponse<IGitLabIssue[]>
+      if (localIssues) {
+        const parsedJSON = JSON.parse(localIssues) as IGitLabIssue[]
+        response = {
+          headers: {},
+          config: {},
+          status: 418,
+          statusText: 'nice',
+          data: parsedJSON
+        }
+        console.warn('LOADING DATA FROM SESSIONSTORAGE')
+      } else {
+        response = await this.getFeed<IGitLabIssue>('issues')
+        window.sessionStorage.setItem('issues', JSON.stringify(response.data))
+        console.warn('FETCHING DATA FROM API')
+      }
 
       return response.data.map((issue: IGitLabIssue) => {
         return new Issue({

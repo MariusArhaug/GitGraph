@@ -1,36 +1,33 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import React from 'react';
-import { APILoader } from '../APILoader';
-import { WebStorage } from './WebStorage';
+import React from 'react'
+import { APILoader } from '../APILoader'
+import { WebStorage } from './WebStorage'
 
 interface ISaveDataButtonClassState {
-    loader: APILoader,
+  loader: APILoader
 }
-
-export class SaveDataButtonClass extends React.Component<Record<string, unknown>, ISaveDataButtonClassState> {
-
-    state: ISaveDataButtonClassState = {
-        loader: new APILoader()
-    }
-
-    public saveData (): void {
-        const { loader } = this.state;
-        const webStorage = new WebStorage({ loader });
-        webStorage.saveToSessionStorage()
-    }
-  
-    render() { 
-        return(
-        <div>
-            <button onClick={this.saveData}>
-                Save Data
-            </button>
-        </div>
-    )
+export class SaveDataButtonClass extends React.Component<
+  Record<string, unknown>,
+  ISaveDataButtonClassState
+> {
+  constructor(props: Record<string, unknown>) {
+    super(props)
+    this.state = {
+      loader: new APILoader(),
     }
   }
 
-  
-  export default SaveDataButtonClass;
-  
-  
+  saveData(): void {
+    console.warn(this.state)
+    const webStorage = new WebStorage({ loader: this.state.loader })
+    webStorage.saveToSessionStorage()
+  }
+
+  render() {
+    return (
+      <div>
+        <button onClick={() => this.saveData()}>Save Data</button>
+      </div>
+    )
+  }
+}

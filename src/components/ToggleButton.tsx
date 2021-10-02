@@ -1,13 +1,5 @@
-import PropTypes from 'prop-types';
-import React, { useState } from 'react';
-
-
 const ToggleButton = () => {
-    const [toggle, setToggle] = useState(false);
 
-    const triggerToggle = () => {
-        setToggle( !toggle )
-    }
 
     return(
         <div className="wrg-toggle">
